@@ -69,21 +69,22 @@ aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/amzn2-ami-hv
 ```bash  # burada AMI yi LATEST_AMI degiskenine atiyorum.
 LATEST_AMI=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2 --query 'Parameters[0].[Value]' --output text)
 ```   
-
+# burada bir tane vim acip ismini userdata.sh verip icine userdatayi koymaliyiz.
 - Now run the instance with CLI command
 
 ```bash
-aws ec2 run-instances --image-id $LATEST_AMI --count 1 --instance-type t2.micro --key-name serdar --security-groups roman_numbers_sec_grp --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=roman_numbers}]' --user-data file:///Users/ODG/Desktop/git_dir/serdar-cw/porfolio_lesson_plan/week_6_romen_numerals/CLI_solution/userdata.sh
+aws ec2 run-instances --image-id $LATEST_AMI --count 1 --instance-type t2.micro --key-name evren --security-groups roman_numbers_sec_grp --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=roman_numbers}]' --user-data file:///Users/ODG/Desktop/git_dir/serdar-cw/porfolio_lesson_plan/week_6_romen_numerals/CLI_solution/userdata.sh
 
-or
+or # ustekini veya altakini kullanabiliriz.
 
 aws ec2 run-instances \
     --image-id $LATEST_AMI \
     --count 1 \
     --instance-type t2.micro \
-    --key-name serdar \
+    --key-name evren \
     --security-groups roman_numbers_sec_grp \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=roman_numbers}]'
+    --user-data file:///home/ec2-user/userdata.sh
 ```
 
 - To see the each instances Ip we\'ll use describe instance CLI command
@@ -102,7 +103,7 @@ aws ec2 describe-instances --filters "Name=tag:Name,Values=roman_numbers" --quer
 
 - To delete instances
 ```bash
-aws ec2 terminate-instances --instance-ids <We can learn this with querry>
+aws ec2 terminate-instances --instance-ids <We can learn this with querry> # burada ids den sonra id numarasini giripyoruz.
 ```
 - To delete security groups
 ```bash
