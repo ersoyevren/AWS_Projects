@@ -26,30 +26,30 @@ Resources:
     Properties:
       ImageId: ami-0022f774911c1d690
       InstanceType: t2.micro
-      KeyName: !Ref KeyName
+      KeyName: !Ref KeyName   # burada !Ref ile parametrede tanimladigim KeyName yi buraya aliyorum. buradaki amac stack kurulum olusurken benden keyname secmemi isteyecektir.
       SecurityGroupIds:
         - !Ref WebServerSecurityGroup
       Tags:
         - Key: Name
-          Value: !Sub Web Server of ${AWS::StackName} Stack 
+          Value: !Sub Web Server of ${AWS::StackName} Stack # Sub ile Ref farki Sub resource olustuktan sonra cekiliyor.
       UserData: !Base64 |
           #! /bin/bash
           yum update -y
           yum install python3 -y 
           pip3 install flask
           cd /home/ec2-user
-          FOLDER="https://raw.githubusercontent.com/serdarcw/my-repository/master/Project-001-Roman-Numerals-Converter"
+          FOLDER="https://raw.githubusercontent.com/ersoyevren/AWS_Projects/master/Project-001-Roman-Numerals-Converter_with_cfn-template"
           wget ${FOLDER}/app.py
           mkdir templates && cd templates
           wget ${FOLDER}/templates/index.html
           wget ${FOLDER}/templates/result.html
           cd ..
           python3 app.py
-
+      
 
 Outputs: 
   WebsiteURL:
     Value: !Sub 
       - http://${PublicAddress}
-      - PublicAddress: !GetAtt WebServerHost.PublicDnsName
+      - PublicAddress: !GetAtt WebServerHost.PublicDnsName # burada getatt kullanmamizin nedeni bir resourcenin alt attribute kullandigimizdan dolayi
     Description: Roman Numerals Converter Application URL

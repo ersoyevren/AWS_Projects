@@ -7,3 +7,6 @@ wget -P templates https://raw.githubusercontent.com/serdarcw/cli_deneme/master/t
 wget -P templates https://raw.githubusercontent.com/serdarcw/cli_deneme/master/templates/result.html
 wget https://raw.githubusercontent.com/serdarcw/cli_deneme/master/app.py
 python3 app.py
+
+# -p dosyayi olusturup icine datayi cek demek.
+

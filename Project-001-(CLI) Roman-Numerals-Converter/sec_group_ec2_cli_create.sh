@@ -19,22 +19,22 @@ aws --version
 ```bash
 aws configure
 ```
-
+aws sts get-caller-identity --query Acoount --output text  #bu komutla aws configure nin basarabildigimizi gosteriyor. bize account id ciktisini veriyor.
 1. Security Groupların oluşturulması
 
-```bash
+```bash   # asagidaki gibi cli da sg olusturuyoruz.
 aws ec2 create-security-group \
     --group-name roman_numbers_sec_grp \
     --description "This Sec Group is to allow ssh and http from anywhere"
 ```
 
 We can check the security Group with these commands
-```bash
+```bash  # burada sg olustugunu goruyoruz.
 aws ec2 describe-security-groups --group-names roman_numbers_sec_grp
 ```
 
 You can check IPs with this command into the EC2
-curl https://checkip.amazonaws.com
+curl https://checkip.amazonaws.com  #public ip yi veriyor.
 
 
 2. Create Rules
@@ -66,9 +66,9 @@ aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/amzn2-ami-hv
 ```
 
 - sonra bu değeri bir variable a atayalım.
-```bash
+```bash  # burada AMI yi LATEST_AMI degiskenine atiyorum.
 LATEST_AMI=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2 --query 'Parameters[0].[Value]' --output text)
-```
+```   
 
 - Now run the instance with CLI command
 
